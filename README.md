@@ -3,7 +3,6 @@
 # Requirement
 
 * Vim > 8.x
-* ...
 
 # Initialization for Ubuntu
 
