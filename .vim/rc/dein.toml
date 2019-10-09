@@ -79,3 +79,6 @@ repo = 'itchyny/lightline.vim.git'
 
 [[plugins]]
 repo = 'jceb/vim-hier.git'
+
+[[plugins]]
+repo = 'fatih/vim-go.git'
