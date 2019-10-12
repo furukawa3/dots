@@ -13,5 +13,7 @@ sh ./installer.sh
 mkdir -p ~/.vim/rc
 ln -s ~/dots/.vim/rc/dein.toml ~/.vim/rc/dein.toml
 ln -s ~/dots/.vim/rc/dein_lazy.toml  ~/.vim/rc/dein_lazy.toml
+ln -s ~/dots/vimrc ~/.vimrc
+ln -s ~/dots/screenrc ~/.screenrc
 ```
 * Refer: https://github.com/Shougo/dein.vim

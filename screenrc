@@ -1,0 +1,101 @@
+escape ^t^t
+vbell off
+msgminwait 0
+attrcolor b "^["
+startup_message off
+defbce on
+hardstatus alwayslastline  "%{=b KG}.: %-w%{.RW}%n %t%{-}%+w :. %=[%Y-%m-%d %02c]"
+#caption always "%?%F%{= kw}%:%{= wK}%?%-w%?%F%{=b bW}%:%{= Wk}%?%n %t%{-}%+w"
+bind l other
+term xterm-256color
+termcapinfo xterm-256color hs@:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+defscrollback 99999
+altscreen on
+autodetach on
+maptimeout 1
+defutf8 on
+defencoding utf8
+encoding utf8 utf8
+cjkwidth on
+
+# trigger for layout sub-commands
+bind ^Y eval 'command -c layout' 'layout show'
+bind y  eval 'command -c layout' 'layout show'
+#
+# # create/remove layout
+bind -c layout c eval 'layout new'    'layout show'
+bind -c layout X eval 'layout remove' 'layout show'
+#
+# # change the current layout title or number
+bind -c layout A colon 'layout title '
+bind -c layout N colon 'layout number '
+#
+# # switch to the layout identified by number or title (not prefix of a title)
+bind -c layout \' eval 'layout select' 'layout show'
+#
+# # switch to other layout
+bind -c layout n eval 'layout next'     'layout show'
+bind -c layout p eval 'layout prev'     'layout show'
+bind -c layout 0 eval 'layout select 0' 'layout show'
+bind -c layout 1 eval 'layout select 1' 'layout show'
+bind -c layout 2 eval 'layout select 2' 'layout show'
+bind -c layout 3 eval 'layout select 3' 'layout show'
+bind -c layout 4 eval 'layout select 4' 'layout show'
+bind -c layout 5 eval 'layout select 5' 'layout show'
+bind -c layout 6 eval 'layout select 6' 'layout show'
+bind -c layout 7 eval 'layout select 7' 'layout show'
+bind -c layout 8 eval 'layout select 8' 'layout show'
+bind -c layout 9 eval 'layout select 9' 'layout show'
+
+# # continuous switch to other layout
+bind -c layout ^N eval 'layout next' 'command -c layout' 'layout show'
+bind -c layout ^P eval 'layout prev' 'command -c layout' 'layout show'
+
+# create window
+screen 0
+screen 1
+screen 2
+screen 3
+screen 4
+
+# create layout
+layout new 0:layout0:vertical
+layout new 1:layout1:horizontal
+layout new 2:dummy
+layout new 3
+
+# setup layout0
+layout select 0
+split -v
+select 0
+focus right
+split
+
+# setup layout1
+layout select layout1:horizontal
+select 2
+split
+focus down
+select 1
+split -v
+focus next
+select 0
+focus right
+select 3
+focus bottom
+select 4
+resize -v -l 20%
+focus top
+
+# setup layout2
+layout remove dummy
+layout select 3
+layout number 2
+layout title single
+
+select 2
+stuff "echo here is current window\n"
+
+# select layout0
+layout select 0
+layout show
