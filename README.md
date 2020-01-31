@@ -8,11 +8,9 @@
 
 ```bash
 sudo -E apt install -y git gcc make
+mkdir -p ~/.cache/dein
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh
-mkdir -p ~/.vim/rc
-ln -s ~/dots/.vim/rc/dein.toml ~/.vim/rc/dein.toml
-ln -s ~/dots/.vim/rc/dein_lazy.toml  ~/.vim/rc/dein_lazy.toml
+sh ./installer.sh ~/.cache/dein
 ln -s ~/dots/vimrc ~/.vimrc
 ln -s ~/dots/screenrc ~/.screenrc
 ```

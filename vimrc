@@ -1,26 +1,37 @@
 set nocompatible
 " Directory to be installed plugins
 let s:dein_dir = expand('~/.cache/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-  endif
-  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
-endif
-
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 " Start setting
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-
-  let g:rc_dir    = expand('~/.vim/rc')
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
-
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
-
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/unite-outline.git')
+  call dein#add('Shougo/unite.vim.git')
+  call dein#add('Shougo/neocomplete.git')
+  call dein#add('Shougo/neobundle.vim.git')
+  call dein#add('Shougo/neosnippet.git')
+  call dein#add('Shougo/neosnippet-snippets.git')
+  call dein#add('thinca/vim-quickrun.git')
+  call dein#add('vim-scripts/svndiff.vim.git')
+  call dein#add('tpope/vim-surround.git')
+  call dein#add('bling/vim-airline.git')
+  call dein#add('nathanaelkane/vim-indent-guides.git')
+  call dein#add('vim-scripts/wombat256.vim.git')
+  call dein#add('5t111111/alt-gtags.vim')
+  call dein#add('Shougo/tabpagebuffer.vim.git')
+  call dein#add('tpope/vim-fugitive.git')
+  call dein#add('osyo-manga/shabadou.vim.git')
+  call dein#add('osyo-manga/vim-watchdogs.git')
+  call dein#add('dannyob/quickfixstatus.git')
+  call dein#add('KazuakiM/vim-qfstatusline.git')
+  call dein#add('tomtom/quickfixsigns_vim')
+  call dein#add('itchyny/lightline.vim.git')
+  call dein#add('jceb/vim-hier.git')
+  call dein#add('fatih/vim-go.git')
+  call dein#add('morhetz/gruvbox.git')
   call dein#end()
   call dein#save_state()
 endif
@@ -31,7 +42,7 @@ endif
 
 syntax on
 set nu
-"set relativenumber
+set relativenumber
 set vb t_vb=
 set title
 set diffopt+=vertical
