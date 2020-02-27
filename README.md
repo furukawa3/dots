@@ -1,13 +1,18 @@
-# dots
+# dots etc..
+
+This repository is to manage my dot files and nit tools.
 
 # Requirement
 
 * Vim > 8.x
+* git
+* gcc
+* make
+* jq
 
 # Initialization for Ubuntu
 
 ```bash
-sudo -E apt install -y git gcc make
 mkdir -p ~/.cache/dein
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 sh ./installer.sh ~/.cache/dein
