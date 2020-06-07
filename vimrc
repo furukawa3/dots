@@ -5,7 +5,6 @@ set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 " Start setting
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
-  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/unite-outline.git')
@@ -42,7 +41,7 @@ endif
 
 syntax on
 set nu
-set relativenumber
+"set relativenumber
 set vb t_vb=
 set title
 set diffopt+=vertical
@@ -78,8 +77,8 @@ augroup highlightIdegraphicSpace
     autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
     autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
-"set clipboard=unnamed,autoselect
-"set listchars=tab:>-,trail:.
+set clipboard=unnamed,autoselect
+set list listchars=tab:\ \ ,eol:$,trail:-,
 ""------------------------------------------------------------------------------
 "" Key-bind configuration
 ""------------------------------------------------------------------------------
