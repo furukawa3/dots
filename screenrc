@@ -1,3 +1,5 @@
+logfile ~/screen/screen-%Y%m%d-%n.log
+deflog on
 escape ^t^t
 vbell off
 msgminwait 0
@@ -6,7 +8,7 @@ startup_message off
 defbce on
 hardstatus alwayslastline  "%{=b KG}.: %-w%{.RW}%n %t%{-}%+w :. %=[%Y-%m-%d %02c]"
 #caption always "%?%F%{= kw}%:%{= wK}%?%-w%?%F%{=b bW}%:%{= Wk}%?%n %t%{-}%+w"
-bind l other
+bind o other
 term xterm-256color
 termcapinfo xterm-256color hs@:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
 defscrollback 99999
@@ -18,16 +20,22 @@ defencoding utf8
 encoding utf8 utf8
 cjkwidth on
 
+# Move to region
+bind j focus down
+bind k focus up
+bind l focus right
+bind h focus left
+
 # Resize divided Window
 bind f eval 'echo "Resize window"' 'command -c resize'
-bind -c resize h eval 'command -c resize' 'resize  -h +5'
-bind -c resize l eval 'command -c resize' 'resize  -h -5'
-bind -c resize j eval 'command -c resize' 'resize  -v +5'
-bind -c resize k eval 'command -c resize' 'resize  -v -5'
-bind -c resize ^h eval 'command -c resize' 'resize -h +5'
-bind -c resize ^l eval 'command -c resize' 'resize -h -5'
-bind -c resize ^j eval 'command -c resize' 'resize -v +5'
-bind -c resize ^k eval 'command -c resize' 'resize -v -5'
+bind -c resize h eval 'command -c resize' 'resize  -h +3'
+bind -c resize l eval 'command -c resize' 'resize  -h -3'
+bind -c resize j eval 'command -c resize' 'resize  -v +3'
+bind -c resize k eval 'command -c resize' 'resize  -v -3'
+bind -c resize ^h eval 'command -c resize' 'resize -h +3'
+bind -c resize ^l eval 'command -c resize' 'resize -h -3'
+bind -c resize ^j eval 'command -c resize' 'resize -v +3'
+bind -c resize ^k eval 'command -c resize' 'resize -v -3'
 
 # trigger for layout sub-commands
 bind ^Y eval 'command -c layout' 'layout show'

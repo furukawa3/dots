@@ -31,6 +31,8 @@ if dein#load_state(s:dein_dir)
   call dein#add('jceb/vim-hier.git')
   call dein#add('fatih/vim-go.git')
   call dein#add('morhetz/gruvbox.git')
+  call dein#add('chase/vim-ansible-yaml.git')
+  call dein#add('simeji/winresizer')
   call dein#end()
   call dein#save_state()
 endif
@@ -38,6 +40,11 @@ endif
 if dein#check_install()
   call dein#install()
 endif
+
+augroup filetypedetect
+    au BufRead,BufNewFile *.yaml setfiletype ansible
+    au BufRead,BufNewFile *.yml  setfiletype ansible
+augroup END
 
 syntax on
 set nu
@@ -60,7 +67,7 @@ set smartindent
 set expandtab
 set tabstop=4
 set showcmd
-"set cursorline
+set cursorline
 set hlsearch
 "set cursorcolumn
 set background=dark
@@ -90,7 +97,11 @@ noremap  <SPACE> gt
 ""
 set textwidth=80
 if exists('&colorcolumn')
-  set colorcolumn=+1
+    set colorcolumn=+1
+endif
+
+if exists('b:did_indent')
+    finish
 endif
 
 set wildmode=list:longest
@@ -108,8 +119,7 @@ hi Search     ctermfg=black ctermbg=lightyellow
 hi PmenuBar   ctermfg=white ctermbg=gray
 hi PmenuSel   ctermfg=black ctermbg=lightgreen
 hi StatusLine term=NONE    cterm=NONE ctermfg=white ctermbg=darkred
-hi cursorline term=reverse cterm=none ctermbg=0
-hi cursorline term=reverse cterm=reverse
+hi clear cursorline
 hi link NonText LineNr
 "let g:molokai_original=1
 
