@@ -38,6 +38,9 @@ if dein#load_state(s:dein_dir)
       call dein#add('roxma/nvim-yarp')
       call dein#add('roxma/vim-hug-neovim-rpc')
   endif
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('pangloss/vim-javascript')
+  call dein#add('majutsushi/tagbar')
   call dein#end()
   call dein#save_state()
 endif
@@ -50,6 +53,9 @@ augroup filetypedetect
     au BufRead,BufNewFile *.yaml setfiletype ansible
     au BufRead,BufNewFile *.yml  setfiletype ansible
 augroup END
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 if system('uname') == "Darwin\n"
     set clipboard=unnamed
@@ -102,8 +108,6 @@ set list listchars=tab:\ \ ,eol:$,trail:-,
 ""------------------------------------------------------------------------------
 "" Key-bind configuration
 ""------------------------------------------------------------------------------
-inoremap &color &color(black,yellow){};<LEFT><LEFT>
-inoremap &size  &size(black,yellow){};<LEFT><LEFT>
 inoremap <C-l> <ESC>
 noremap  <SPACE> gt
 "
