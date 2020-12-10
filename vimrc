@@ -6,17 +6,16 @@ set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
-  call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/unite-outline.git')
   call dein#add('Shougo/unite.vim.git')
-  call dein#add('Shougo/neocomplete.git')
   call dein#add('Shougo/neobundle.vim.git')
   call dein#add('Shougo/neosnippet.git')
   call dein#add('Shougo/neosnippet-snippets.git')
   call dein#add('thinca/vim-quickrun.git')
   call dein#add('vim-scripts/svndiff.vim.git')
   call dein#add('tpope/vim-surround.git')
-  call dein#add('bling/vim-airline.git')
+  call dein#add('vim-airline/vim-airline.git')
+  call dein#add('vim-airline/vim-airline-themes.git')
   call dein#add('nathanaelkane/vim-indent-guides.git')
   call dein#add('vim-scripts/wombat256.vim.git')
   call dein#add('5t111111/alt-gtags.vim')
@@ -33,6 +32,12 @@ if dein#load_state(s:dein_dir)
   call dein#add('morhetz/gruvbox.git')
   call dein#add('chase/vim-ansible-yaml.git')
   call dein#add('simeji/winresizer')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('bronson/vim-trailing-whitespace')
+  if !has('nvim')
+      call dein#add('roxma/nvim-yarp')
+      call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
   call dein#end()
   call dein#save_state()
 endif
@@ -67,7 +72,7 @@ set smartindent
 set expandtab
 set tabstop=4
 set showcmd
-set cursorline
+"set cursorline
 set hlsearch
 "set cursorcolumn
 set background=dark
@@ -138,53 +143,10 @@ hi link NonText LineNr
 "" Plug-in configuration
 ""------------------------------------------------------------------------------
 "==============================================================================
-" neocomplete
+" deoplete
 "==============================================================================
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+let g:deoplete#enable_at_startup = 1
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><C-g>  neocomplete#undo_completion()
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-"
 "==============================================================================
 " quickrun
 "==============================================================================
@@ -214,16 +176,12 @@ let g:quickrun_config['watchdogs_checker/nop'] = {
       \ "command" : "echo",
       \ "exec" : "%c nop",
       \}
-"let g:quickrun_config['scala/watchdogs_checker'] = {"type" : "watchdogs_checker/nop"}
+let g:quickrun_config['scala/watchdogs_checker'] = {"type" : "watchdogs_checker/nop"}
 let g:watchdogs_check_BufWritePost_enables = {
       \ "scala" : 0
       \ }
 let g:watchdogs_check_BufWritePost_enable = 1
-
-let s:pyflakes = 'python'
-"      \ executable('python3') ? 'python3' :
-"      \ executable('pyflakes') ? 'pyflakes' :
-"      \ 'python'
+let s:pyflakes = executable('python3') ? 'python3' : 'python'
 let s:cmdopt = executable('pyflakes3') ? '' :
       \ executable('python3') ? '-m pyflakes' :
       \ executable('pyflakes') ? '' :
@@ -243,7 +201,7 @@ call watchdogs#setup(g:quickrun_config)
 
 augroup my_watchdogs
     autocmd!
-"    autocmd InsertLeave,BufWritePost,TextChanged *.py WatchdogsRun
+    autocmd InsertLeave,BufWritePost,TextChanged *.py WatchdogsRun
     autocmd BufRead,BufNewFile *.py WatchdogsRun
 augroup END
 
@@ -353,3 +311,24 @@ function! s:unite_my_settings()"{{{
   inoremap <silent><buffer> _ <SPACE>
 endfunction "}}}
 "}}}
+
+" Use vsplit mode
+if has("vim_starting") && !has('gui_running') && has('vertsplit')
+  function! EnableVsplitMode()
+    " enable origin mode and left/right margins
+    let &t_CS = "y"
+    let &t_ti = &t_ti . "\e[?6;69h"
+    let &t_te = "\e[?6;69l\e[999H" . &t_te
+    let &t_CV = "\e[%i%p1%d;%p2%ds"
+    call writefile([ "\e[?6;69h" ], "/dev/tty", "a")
+  endfunction
+
+  " old vim does not ignore CPR
+  map <special> <Esc>[3;9R <Nop>
+
+  " new vim can't handle CPR with direct mapping
+  " map <expr> ^[[3;3R EnableVsplitMode()
+  set t_F9=^[[3;3R
+  map <expr> <t_F9> EnableVsplitMode()
+  let &t_RV .= "\e[?6;69h\e[1;3s\e[3;9H\e[6n\e[0;0s\e[?6;69l"
+endif
