@@ -51,12 +51,21 @@ augroup filetypedetect
     au BufRead,BufNewFile *.yml  setfiletype ansible
 augroup END
 
+if system('uname') == "Darwin\n"
+    set clipboard=unnamed
+else
+    set clipboard=unnamed,autoselect
+endif
+
 syntax on
 set nu
 "set relativenumber
 set vb t_vb=
 set title
-set diffopt+=vertical
+if &diff
+    set diffopt-=internal
+    set diffopt+=vertical
+endif
 filetype on
 filetype indent on
 filetype plugin on
@@ -89,7 +98,6 @@ augroup highlightIdegraphicSpace
     autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=DarkGreen guibg=DarkGreen
     autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
-set clipboard=unnamed,autoselect
 set list listchars=tab:\ \ ,eol:$,trail:-,
 ""------------------------------------------------------------------------------
 "" Key-bind configuration
