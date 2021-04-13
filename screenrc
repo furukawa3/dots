@@ -7,7 +7,11 @@ attrcolor b "^["
 startup_message off
 defbce on
 hardstatus alwayslastline  "%{=b KG}.: %-w%{.RW}%n %t%{-}%+w :. %=[%Y-%m-%d %02c]"
-#caption always "%?%F%{= kw}%:%{= wK}%?%-w%?%F%{=b bW}%:%{= Wk}%?%n %t%{-}%+w"
+setenv C_SELECTED "rw"
+setenv C_NONE "Wb"
+setenv C_CURRENT_ACTIVE "bW"
+setenv C_CURRENT_INACTIVE "gW"
+caption always "%?%F%{= $C_SELECTED}%:%{= $C_NONE}%?%-w%?%F%{=b $C_CURRENT_ACTIVE}%:%{= $C_CURRENT_INACTIVE}%?%n %t%{-}%+w"
 bind o other
 term xterm-256color
 termcapinfo xterm-256color hs@:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
@@ -19,6 +23,12 @@ defutf8 on
 defencoding utf8
 encoding utf8 utf8
 cjkwidth on
+
+# Set broadcast command
+## 1. Set environmental value to be broadcasted
+bind g setenv BROADCAST_CMD
+## 2. Send broadcast command to all windows
+bind s eval 'at "#" stuff "${BROADCAST_CMD}^M"'
 
 # Move to region
 bind j focus down
