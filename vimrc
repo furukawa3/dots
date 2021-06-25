@@ -87,7 +87,7 @@ set smartindent
 set expandtab
 set tabstop=4
 set showcmd
-"set cursorline
+set cursorline
 set hlsearch
 "set cursorcolumn
 set background=dark
@@ -109,8 +109,12 @@ set list listchars=tab:\ \ ,eol:$,trail:-,
 "" Key-bind configuration
 ""------------------------------------------------------------------------------
 inoremap <C-l> <ESC>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 noremap  <SPACE> gt
-"
+noremap gl :set nonu<CR>:set nolist<CR>:QuickfixsignsDisable<CR>
+noremap g; :set nu<CR>:set list<CR>:QuickfixsignsEnable<CR>
+
 ""
 set textwidth=80
 if exists('&colorcolumn')
@@ -135,10 +139,9 @@ hi Normal ctermfg=252 ctermbg=233 cterm=none guifg=#e3e0d7 guibg=#242424 gui=non
 hi Search     ctermfg=black ctermbg=lightyellow
 hi PmenuBar   ctermfg=white ctermbg=gray
 hi PmenuSel   ctermfg=black ctermbg=lightgreen
+hi PmenuSel ctermbg=13 ctermfg=0
 hi StatusLine term=NONE    cterm=NONE ctermfg=white ctermbg=darkred
-hi clear cursorline
 hi link NonText LineNr
-"let g:molokai_original=1
 
 ""------------------------------------------------------------------------------
 "" Command shortcut
