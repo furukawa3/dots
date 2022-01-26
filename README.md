@@ -10,7 +10,19 @@ This repository is to manage my dot files and nit tools.
 * make
 * jq
 
-# Initialization for Ubuntu
+## CentOS
+
+```
+sudo yum install -y gcc make jq python3-devel ruby-devel lua-devel ncurses-devel
+cd ~/
+git clone https://github.com/vim/vim.git; cd vim
+sudo ./configure --with-features=huge --enable-multibyte --enable-luainterp=dynamic --enable-gpm --enable-cscope --enable-fontset --enable-fail-if-missing --prefix=/usr/local --enable-pythoninterp=dynamic --enable-python3interp=dynamic --enable-rubyinterp=dynamic
+make
+make install
+python3 -m pip pynvim --upgrade
+```
+
+# Initialization
 
 ```bash
 mkdir -p ~/.cache/dein
